@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="lgmg">
+	<resultMap type="MercaderiaIbatis" id="mapMercaderia">
+		<id  column="idMerc" property="id"/>
+		<result column="nomMerc" property="nombre"/>
+		<result column="stkMerc" property="stock"/>
+		<result column="preMerc" property="precio"/>
+	</resultMap>
+	<resultMap type="MercaderiaExtIbatis" id="mapMercaderiaExt">
+		<id  column="idMerc" property="id"/>
+		<result column="nomMerc" property="nombre"/>
+		<result column="stkMerc" property="stock"/>
+		<result column="preMerc" property="precio"/>
+		<result column="idTipoMerc" property="idtipo"/>
+		<result column="tipoMerc" property="tipo"/>
+	</resultMap>
+	
+	
+	<select id="SQL_lstMercaderia" statementType="CALLABLE" 
+			resultMap="mapMercaderiaExt">
+		call sp_listaMercaderiaExt();
+	</select>
+	
+	<insert id="SQL_regMercaderia" statementType="CALLABLE" parameterType="MercaderiaIbatis">
+		call sp_regMercaderia(#{nombre},#{stock},#{precio},#{idTipo});
+	</insert>
+	
+	<update id="SQL_upMercaderia" statementType="CALLABLE" parameterType="MercaderiaIbatis">
+		call sp_upMercaderia(#{id},#{nombre},#{stock},#{precio},#{idTipo});
+	</update>
+	
+	<delete id="SQL_delMercaderia" statementType="CALLABLE" parameterType="MercaderiaIbatis">
+		call sp_delMercaderia(#{id});
+	</delete>
+</mapper>
